@@ -21,9 +21,12 @@ const Job = ({ data }) => {
 			<h1>{job.role}</h1>
 			<h5>{job.company_name}</h5>
 			<div dangerouslySetInnerHTML={{ __html: job.text }} />
-			<Link href={job.url}>
-				<button>Apply Now</button>
-			</Link>
+			<div>
+				<Link href={job.url}>
+					<button>Apply Now</button>
+				</Link>
+				<button>Save Job</button>
+			</div>
 		</main>
 	);
 };
