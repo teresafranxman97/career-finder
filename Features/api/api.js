@@ -5,7 +5,9 @@ export const api = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: "https://findwork.dev/api/jobs/",
 		prepareHeaders: (headers) => {
-			headers.set({ Authorization: `Token ${process.env.KEY}` });
+			headers.set("Authorization", `Token ${process.env.KEY}`);
+
+			return headers;
 		},
 	}),
 	extractRehydrationInfo(action, { reducerPath }) {
@@ -17,13 +19,15 @@ export const api = createApi({
 		getAllJobs: build.query({
 			query: () => "/jobs",
 		}),
-		getJobsById: build.query({
+		getJobById: build.query({
 			query: (id) => ({ url: `/jobs/${id}` }),
 		}),
 	}),
 });
 
-
-export const { useGetAllJobsQuery, useGetJobsByIdQuery } = api;
-export const { getAllJobs, getJobsById } = api.endpoints;
-
+export const {
+	useGetAllJobsQuery,
+	useGetJobsByIdQuery,
+	util: { getRunningOperationPromises },
+} = api;
+export const { getAllJobs, getJobById } = api.endpoints;

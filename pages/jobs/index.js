@@ -1,19 +1,22 @@
-import { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { wrapper } from "../../store";
+import { setJobs } from "../../Features/jobs/jobsSlice";
+import { useSelector } from "react-redux";
 
-export const getServerSideProps = async () => {
-    const response = await axios.get("https://findwork.dev/api/jobs/", {
-        headers: { Authorization: `Token ${process.env.KEY}` }
-    });
+export const getServerSideProps = wrapper.getServerSideProps(
+	(store) => async () => {
+		const response = await axios.get("https://findwork.dev/api/jobs/", {
+			headers: { Authorization: `Token ${process.env.KEY}` },
+		});
+		const jobs = response.data.results;
 
-    const data = response.data.results
+		store.dispatch(setJobs(jobs));
+	}
+);
 
-    return { props: { data } }
-};
-
-const Jobs = ({ data }) => {
-	const [jobs] = useState(data);
+const Jobs = () => {
+	const { jobs } = useSelector((state) => state.jobs);
 
 	return (
 		<main>
