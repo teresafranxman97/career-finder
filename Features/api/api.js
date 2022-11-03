@@ -5,7 +5,9 @@ export const api = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: "https://findwork.dev/api/jobs/",
 		prepareHeaders: (headers) => {
-			headers.set("Authorization", `Token ${process.env.KEY}`);
+			if (headers) {
+				headers.set("Authorization", `Token ${process.env.KEY}`);
+			}
 
 			return headers;
 		},

@@ -1,30 +1,36 @@
-import { useState } from "react";
 import axios from "axios";
-import Link from "next/link";
+import { wrapper } from "../../store";
+import { setJob } from "../../Features/jobs/jobSlice";
+import { useSelector } from "react-redux";
 
-export const getServerSideProps = async (context) => {
-	const { id } = context.query;
-	const response = await axios.get(`https://findwork.dev/api/jobs/${id}`, {
-		headers: { Authorization: `Token ${process.env.KEY}` },
-	});
+export const getServerSideProps = wrapper.getServerSideProps(
+	(store) => async (context) => {
+		const { id } = context.query;
 
-	const data = response.data;
+		const response = await axios.get(`https://findwork.dev/api/jobs/${id}`, {
+			headers: { Authorization: `Token ${process.env.KEY}` },
+		});
 
-	return { props: { data } };
-};
+		const job = response.data;
 
-const Job = ({ data }) => {
-	const [job] = useState(data);
+		store.dispatch(setJob(job));
+	}
+);
+
+
+const Job = () => {
+	const { job } = useSelector((state) => state.job);
 
 	return (
-		<main>
+		<main key={job.id}>
 			<h1>{job.role}</h1>
 			<h5>{job.company_name}</h5>
 			<div dangerouslySetInnerHTML={{ __html: job.text }} />
 			<div>
-				<Link href={job.url}>
+				<a href={job.url}>
 					<button>Apply Now</button>
-				</Link>
+				</a>
+
 				<button>Save Job</button>
 			</div>
 		</main>
@@ -32,3 +38,4 @@ const Job = ({ data }) => {
 };
 
 export default Job;
+
