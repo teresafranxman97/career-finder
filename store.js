@@ -3,7 +3,7 @@ import { createWrapper } from "next-redux-wrapper";
 import savedJobsReducer from "./Features/savedjobs/savedJobsSlice";
 import jobsReducer from "./Features/jobs/jobsSlice";
 import jobReducer from "./Features/jobs/jobSlice";
-import { api } from "./Features/api/api";
+// import { api } from "./Features/api/api";
 
 export const makeStore = () =>
 	configureStore({
@@ -11,11 +11,12 @@ export const makeStore = () =>
 			jobs: jobsReducer,
 			job: jobReducer,
 			savedJobs: savedJobsReducer,
-			[api.reducerPath]: api.reducer,
+			// [api.reducerPath]: api.reducer,
 		},
-		middleware: (getDefaultMiddleware) => {
-			return getDefaultMiddleware().concat(api.middleware);
-		},
+		// middleware: (getDefaultMiddleware) => {
+		// 	return getDefaultMiddleware().concat(api.middleware);
+		// },
+		devTools: true,
 	});
 
 export const wrapper = createWrapper(makeStore, { debug: true });

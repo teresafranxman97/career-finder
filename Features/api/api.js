@@ -5,11 +5,7 @@ export const api = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: "https://findwork.dev/api/jobs/",
 		prepareHeaders: (headers) => {
-			if (headers) {
-				headers.set("Authorization", `Token ${process.env.KEY}`);
-			}
-
-			return headers;
+			headers.set("Authorization", `Token ${process.env.KEY}`);
 		},
 	}),
 	extractRehydrationInfo(action, { reducerPath }) {
