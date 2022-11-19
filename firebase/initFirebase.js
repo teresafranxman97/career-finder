@@ -1,9 +1,5 @@
 import "firebase/auth";
-import "firebase/database";
-import "firebase/storage";
-import "firebase/analytics";
-import "firebase/performance";
-import Firebase from "Firebase/app";
+import firebase from "firebase/app";
 
 const firebaseConfig = {
 	apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,8 +12,8 @@ const firebaseConfig = {
 };
 
 // If a Firebase instance does not exist, create one
-if (!Firebase.apps.length) {
-	Firebase.initializeApp(firebaseConfig);
-}
-
-export default Firebase;
+export const initFirebase = () => {
+	if (!firebase.apps.length) {
+		firebase.initializeApp(firebaseConfig);
+	}
+};

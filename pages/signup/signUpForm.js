@@ -1,7 +1,11 @@
 import { useFormik } from "formik";
 import schema from "./schema";
+import { setUser } from "../../Features/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const SignUpForm = () => {
+	const dispatch = useDispatch();
+
 	const formik = useFormik({
 		initialValues: {
 			firstName: "",
@@ -11,7 +15,7 @@ const SignUpForm = () => {
 		},
 		validationSchema: schema,
 		onSubmit: (values) => {
-			console.log(values);
+			dispatch(setUser(values));
 		},
 	});
 

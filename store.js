@@ -3,6 +3,7 @@ import { createWrapper } from "next-redux-wrapper";
 import savedJobsReducer from "./Features/savedjobs/savedJobsSlice";
 import jobsReducer from "./Features/jobs/jobsSlice";
 import jobReducer from "./Features/jobs/jobSlice";
+import userReducer from "./Features/user/userSlice";
 // import { api } from "./Features/api/api";
 
 export const makeStore = () =>
@@ -11,6 +12,7 @@ export const makeStore = () =>
 			jobs: jobsReducer,
 			job: jobReducer,
 			savedJobs: savedJobsReducer,
+			user: userReducer,
 			// [api.reducerPath]: api.reducer,
 		},
 		// middleware: (getDefaultMiddleware) => {
